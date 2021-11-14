@@ -2,9 +2,8 @@ package collector
 
 import "github.com/prometheus/client_golang/prometheus"
 
-const (
-	// Exporter namespace.
-	Namespace = "hznuoj"
+var (
+	Namespace = ""
 )
 
 func newDesc(subSystem, name, help string) *prometheus.Desc {

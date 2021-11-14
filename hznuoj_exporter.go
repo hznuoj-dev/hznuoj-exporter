@@ -19,12 +19,17 @@ import (
 	"hznuoj_exporter/collector"
 )
 
-const (
-	Namespace = collector.Namespace + "_exporter"
+var (
+	Namespace = ""
 )
 
 var (
 	webConfig = webflag.AddFlags(kingpin.CommandLine)
+
+	namespace = kingpin.Flag(
+		"metrics.namespace",
+		"Namespace of metrics",
+	).Default("hznuoj").String()
 
 	listenAddress = kingpin.Flag(
 		"web.listen-address",
@@ -91,13 +96,16 @@ func main() {
 	kingpin.Parse()
 	logger := promlog.New(promlogConfig)
 
-	level.Info(logger).Log("msg", "Starting hznuoj_exporter", "version", version.Info())
+	collector.Namespace = *namespace
+	Namespace = collector.Namespace + "_exporter"
+
+	level.Info(logger).Log("msg", "Starting "+Namespace, "version", version.Info())
 	level.Info(logger).Log("msg", "Build context", version.BuildContext())
 
 	var landingPage = []byte(`<html>
-	<head><title>HZNUOJ exporter</title></head>
+	<head><title>` + Namespace + `</title></head>
 	<body>
-	<h1>HZNUOJ exporter</h1>
+	<h1>` + Namespace + `</h1>
 	<p><a href='` + *metricPath + `'>Metrics</a></p>
 	</body>
 	</html>
