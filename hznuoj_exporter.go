@@ -56,18 +56,6 @@ func init() {
 	prometheus.MustRegister(version.NewCollector(Namespace))
 }
 
-// db, err := sql.Open(*dbType, *dbConnectString)
-// if err != nil {
-// 	panic(err)
-// }
-
-// defer db.Close()
-
-// rows := db.QueryRow("SELECT COUNT(*) FROM hit_log")
-// var count int64
-// rows.Scan(&count)
-// fmt.Println(count)
-
 func newHandler(metrics collector.Metrics, scrapers []collector.Scraper, logger log.Logger) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		ctx := r.Context()
@@ -114,6 +102,7 @@ func main() {
 	scrapers := []collector.Scraper{
 		collector.ProblemInfo{},
 		collector.UserInfo{},
+		collector.HitInfo{},
 	}
 	handlerFunc := newHandler(collector.NewMetrics(), scrapers, logger)
 	http.Handle(*metricPath, promhttp.InstrumentMetricHandler(prometheus.DefaultRegisterer, handlerFunc))
