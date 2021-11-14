@@ -8,9 +8,7 @@ import (
 	"github.com/prometheus/client_golang/prometheus"
 )
 
-const loginCountQuery = `
-	SELECT COUNT(*) FROM loginlog
-`
+const loginCountQuery = "SELECT MAX(`index`) FROM loginlog"
 
 type LoginInfo struct{}
 

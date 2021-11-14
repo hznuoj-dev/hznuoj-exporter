@@ -8,9 +8,7 @@ import (
 	"github.com/prometheus/client_golang/prometheus"
 )
 
-const hitCountQuery = `
-	SELECT COUNT(*) FROM hit_log
-`
+const hitCountQuery = "SELECT MAX(`index`) FROM hit_log"
 
 type HitInfo struct{}
 
