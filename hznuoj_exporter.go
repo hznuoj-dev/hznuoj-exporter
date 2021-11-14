@@ -104,6 +104,7 @@ func main() {
 		collector.UserInfo{},
 		collector.HitInfo{},
 		collector.LoginInfo{},
+		collector.ContestInfo{},
 	}
 	handlerFunc := newHandler(collector.NewMetrics(), scrapers, logger)
 	http.Handle(*metricPath, promhttp.InstrumentMetricHandler(prometheus.DefaultRegisterer, handlerFunc))

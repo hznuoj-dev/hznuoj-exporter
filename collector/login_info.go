@@ -42,7 +42,7 @@ func (LoginInfo) Scrape(ctx context.Context, db *sql.DB, ch chan<- prometheus.Me
 		}
 
 		ch <- prometheus.MustNewConstMetric(
-			newDesc(loginSubsystem, "total", "total number of hit"), prometheus.CounterValue, float64(count),
+			newDesc(loginSubsystem, "total", "total number of login"), prometheus.CounterValue, float64(count),
 		)
 
 	}
